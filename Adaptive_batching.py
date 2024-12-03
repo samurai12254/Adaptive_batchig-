@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader
 
 class DLoader(DataLoader):
-    def init(self, dataset, batch_size=64, max_batch_size=1024, shuffle=False, **kwargs):
+    def __init__ (self, dataset, batch_size=64, max_batch_size=1024, shuffle=False, **kwargs):
         super().init(dataset, batch_size=batch_size, shuffle=shuffle, **kwargs)
         self.start_iter = iter(self)
         self.current = 0
@@ -76,12 +76,12 @@ class DLoader(DataLoader):
 
         self.defaults['k'] += 1
 
-    def iter(self):
+    def __iter__(self):
         self.start_iter = iter(super().iter())
         self.current = 0
         return self
 
-    def next(self):
+    def __next__(self):
         if self.current < len(self):
             self.current += 1
             
