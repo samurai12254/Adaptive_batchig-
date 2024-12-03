@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 
 class DLoader(DataLoader):
     def __init__ (self, dataset, batch_size=64, max_batch_size=1024, shuffle=False, **kwargs):
-        super().init(dataset, batch_size=batch_size, shuffle=shuffle, **kwargs)
+        super().__init__(dataset, batch_size=batch_size, shuffle=shuffle, **kwargs)
         self.start_iter = iter(self)
         self.current = 0
         self.batch_hist = []
