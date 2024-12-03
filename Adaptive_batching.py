@@ -77,7 +77,7 @@ class DLoader(DataLoader):
         self.defaults['k'] += 1
 
     def __iter__(self):
-        self.start_iter = iter(super().iter())
+        self.start_iter = iter(super().__iter__)
         self.current = 0
         return self
 
