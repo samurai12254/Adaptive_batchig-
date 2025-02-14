@@ -66,12 +66,12 @@ class DLoader(DataLoader):
             len_curr = self.defaults["len"]
 
             if len_prev != len_curr:
-                B = (beta_prev - beta) / (len_prev - len_curr)
+                B = ((beta_prev - beta) / (len_prev ** 0.5 - len_curr ** 0.5)) * (len_prev * len_curr) ** 0.5
                 A = len_curr - beta * B
                 self.defaults["A"] = A
                 self.defaults["B"] = B
 
-                next_len = max(1, min(self.defaults["MaxB"], self.defaults["B"] / (beta - A)))
+                next_len = max(1, min(self.defaults["MaxB"], (self.defaults["B"] / (beta - A)) ** 2))
                 self.defaults["next_len"] = next_len
 
         self.defaults['k'] += 1
@@ -84,7 +84,7 @@ class DLoader(DataLoader):
     def __next__(self):
         if self.current < len(self):
             self.current += 1
-            
+
 
             n = max(1, self.defaults["next_len"] // self.defaults["b0"])
             n = min(n, self.defaults["MaxB"] // self.defaults["b0"])
